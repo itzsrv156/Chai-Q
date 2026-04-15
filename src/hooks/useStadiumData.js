@@ -27,6 +27,17 @@ export const useStadiumData = () => {
     }
   ]);
 
+  const addLog = (text) => {
+    setLogs(prev => {
+      const nextLogs = [{
+        id: Date.now(),
+        time: new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+        text: `[AI]: ${text}`
+      }, ...prev];
+      return nextLogs.slice(0, 15);
+    });
+  };
+
   useEffect(() => {
     // Jitter stats to simulate a hyper-realistic data stream
     const interval = setInterval(() => {
@@ -45,18 +56,11 @@ export const useStadiumData = () => {
     // Generate AI intelligence logs randomly
     const logInterval = setInterval(() => {
       const newThought = AI_THOUGHTS[Math.floor(Math.random() * AI_THOUGHTS.length)];
-      setLogs(prev => {
-        const nextLogs = [{
-          id: Date.now(),
-          time: new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-          text: `[AI]: ${newThought}`
-        }, ...prev];
-        return nextLogs.slice(0, 15); // Keep the latest 15 logs
-      });
+      addLog(newThought);
     }, 5000 + Math.random() * 4000); // Randomly every 5 to 9 seconds
     
     return () => clearInterval(logInterval);
   }, []);
 
-  return { stats, logs };
+  return { stats, logs, addLog };
 };
