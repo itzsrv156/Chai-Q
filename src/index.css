@@ -1,60 +1,47 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
-  /* Forcing a dark theme base */
   background-color: #050505;
   color-scheme: dark;
+}
+
+@keyframes mesh-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes noise-jitter {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 2px); }
+  50% { transform: translate(2px, -1px); }
+  75% { transform: translate(-1px, 2px); }
+  100% { transform: translate(2px, -2px); }
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-color: #050505;
-  /* Deep Black */
+  background: linear-gradient(-45deg, #050505, #1a0505, #260a0d, #050505);
+  background-size: 400% 400%;
+  animation: mesh-gradient 20s ease infinite;
   color: #ffffff;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  /* This prevents the "bounce" scroll on laptops, making it feel like an App */
-  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
 }
 
-/* Custom "Chai-Q" Pro Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #050505;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #c02c3a;
-  /* Your RCB Red */
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #8f1a26;
-  /* Darker Red on hover */
-}
-
-/* The Glass Utility 
-   (Even though it's in tailwind.config, having it here 
-   ensures it works even if the config takes a second to reload) 
-*/
+/* Hardcoded Glass Effect for Stability */
 .glass {
-  background: rgba(255, 255, 255, 0.03) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  transition: all 0.3s ease;
 }
 
-#root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.glass:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(192, 44, 58, 0.4);
+  transform: translateY(-4px);
 }
